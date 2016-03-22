@@ -62,7 +62,7 @@ BOOL RLMPropertyTypeIsNumeric(RLMPropertyType propertyType) {
     return self;
 }
 
--(void)updateAccessors {
+- (void)updateAccessors {
     // populate getter/setter names if generic
     if (!_getterName) {
         _getterName = _name;
