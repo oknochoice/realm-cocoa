@@ -1253,7 +1253,7 @@ extern "C" {
     }];
 
     NSError *writeError;
-    XCTAssertTrue([realm writeCopyToPath:RLMTestRealmPath() error:&writeError]);
+    XCTAssertTrue([realm writeCopyToFileURL:[NSURL fileURLWithPath:RLMTestRealmPath()] error:&writeError]);
     XCTAssertNil(writeError);
     RLMRealm *copy = [self realmWithTestPath];
     XCTAssertEqual(1U, [IntObject allObjectsInRealm:copy].count);
@@ -1267,7 +1267,7 @@ extern "C" {
     }];
 
     NSError *writeError;
-    XCTAssertFalse([realm writeCopyToPath:RLMTestRealmPath() error:&writeError]);
+    XCTAssertFalse([realm writeCopyToFileURL:[NSURL fileURLWithPath:RLMTestRealmPath()] error:&writeError]);
     XCTAssertEqual(writeError.code, RLMErrorFileExists);
 }
 
@@ -1278,9 +1278,8 @@ extern "C" {
         [IntObject createInRealm:realm withValue:@[@0]];
     }];
 
-
     NSError *writeError;
-    XCTAssertFalse([realm writeCopyToPath:@"/tmp/RLMTestDirMayNotExist/foo" error:&writeError]);
+    XCTAssertFalse([realm writeCopyToFileURL:[NSURL fileURLWithPath:@"/tmp/RLMTestDirMayNotExist/foo"] error:&writeError]);
     XCTAssertEqual(writeError.code, RLMErrorFileNotFound);
 }
 
@@ -1291,7 +1290,7 @@ extern "C" {
         [IntObject createInRealm:realm withValue:@[@0]];
 
         NSError *writeError;
-        XCTAssertTrue([realm writeCopyToPath:RLMTestRealmPath() error:&writeError]);
+        XCTAssertTrue([realm writeCopyToFileURL:[NSURL fileURLWithPath:RLMTestRealmPath()] error:&writeError]);
         XCTAssertNil(writeError);
         RLMRealm *copy = [self realmWithTestPath];
         XCTAssertEqual(1U, [IntObject allObjectsInRealm:copy].count);
